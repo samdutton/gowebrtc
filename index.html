@@ -29,8 +29,8 @@ URL: https://code.google.com/p/io-2012-slides
 <slide class="logoslide nobackground">
   <article class="flexbox vcenter">
     <div style='margin: 0 0 2em 0'><img src="images/google_developers_logo.png"></div>
-    <div>Move forward and back with the arrow keys</div>
-  </article>
+<!--     <div>Move forward and back with the arrow keys</div>
+ -->  </article>
 </slide>
 
 <slide class="title-slide segue nobackground">
@@ -42,40 +42,69 @@ URL: https://code.google.com/p/io-2012-slides
     <p data-config-presenter><!-- populated from slide_config.json --></p>
   </hgroup>
   <aside class="note"><p>
-  Hi. I'm Justin Uberti, tech lead for WebRTC at Google.
-  [cut to demo machine, showing Sam with Nexus, walking down hall]
-  Sam Dutton, coming to you live from WebRTC on Chrome for Android
-  [Sam walks up on stage]
-  [Sam intro]
-  We're here to show off some of the great stuff our team has been working on.
   </p></aside>
 </slide>
 
-<slide class="nobackground">
+<!-- <slide class="nobackground">
   <hgroup>
     <h2>Watch this presentation on YouTube</h2>
   </hgroup>
   <article>
-    <iframe  width="730" style="width: 730px;" src="http://www.youtube.com/embed/p2HzZkd2A40"></iframe>
+    <iframe  width="730" style="width: 730px;" src="http://www.youtube.com/embed/xxxxxx"></iframe>
   </article>
-</slide>
+</slide> -->
 
 <slide class="nobackground">
     <article class="fill flexbox vcenter">
-      <div>Low cost, high quality audio and video communication</div>
-    </article>
-    <aside class="note"><p>
-    So WebRTC is all about Real Time Communication, R T C. This is the ability to communicate live, exchanging audio, video, with someone as if they were right there next to you.
-    </p></aside>
-</slide>
-
-<slide class="nobackground">
-    <article class="fill flexbox vcenter">
-      <div class="big">...and data!</div>
+      <div class='big'><a href="http://www.samdutton.net/realtime2013" title="These slides online">gowebrtc.appspot.com</a></div>
     </article>
     <aside class="note">
-      <p>And we're also doing this for data communication, so that we can bring this same sort of liveness to all kinds of web apps, like games, remote desktop apps.</p>
-<p> [TODO juberti] And we're building this capability into the fabric of the web, to make it a seamless part of your web experience.</p>
+    </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div>Real-time communication built into the browser</div>
+    </article>
+    <aside class="note">
+    <p>WebRTC is an open source project to enable real time communication to be built into web browsers. </p>
+   </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div>Open source, no plugins, free</div>
+    </article>
+    <aside class="note">
+      <p></p>
+    </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div>Video, audio, data</div>
+    </article>
+    <aside class="note">
+      <p></p>
+    </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div>High quality, low cost</div>
+    </article>
+    <aside class="note">
+      <p></p>
+    </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div class='big'>Peer to peer</div>
+    </article>
+    <aside class="note">
+      <p>And for reasons that will become obvious...</p>
+      <p>WebRTC had to be peer to peer.</p>
     </aside>
 </slide>
 
@@ -92,44 +121,48 @@ URL: https://code.google.com/p/io-2012-slides
   </article>
   <aside class="note">
     <p>
-    Now we think WebRTC is cool, but there are a lot of other people who are pretty excited about it as well. One of the reasons WebRTC is significant because by enabling real-time audio and video, it fills one of the few remaining gaps in the web platform, where proprietary native apps (like Skype) could do something the web couldn't do. Now we're able to turn this around, and create a web where every WebRTC-enabled browser  can communicate in real time to each other, just by loading a web page. (Freely available?)
    </p>
   </aside>
 </slide>
 
-<slide>
-  <hgroup>
-    <h2>WebRTC on Chrome</h2>
-  </hgroup>
-  <article>
-    <ul>
-      <li>Bringing real-time communications to the web</li>
-      <li>Building a state-of-the-art media stack into Chrome</li>
-      <li>Developing a new communications platform</li>
-    </ul>
-  </article>
-  <aside class="note">
-    <p>So that's what WebRTC strives to do:</p>
-    <ul>
-      <li>to add the key browser APIs for communications into the web platform</li>
-      <li>to build the best implementation of this within Chrome</li>
-      <li>and then to use this to create a new communications ecosystem, of WebRTC-capable devices</li>
-    </ul>
-  </aside>
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div class='big'><img src="images/no.png" alt="RTC via a server" style='max-width: 100%' /></div>
+    </article>
+    <aside class="note">
+      <p>In the past, RTC worked like this.</p>
+      <p>Noone wants communication based on a nasty diagram like that...</p>
+      <p>It's inefficient and expensive running a server to relay media.</p>
+    </aside>
 </slide>
 
 
-<slide class="segue dark quote nobackground">
-  <aside class="gdbar right bottom"><img src="images/google_developers_icon_128.png"></aside>
-  <article class="flexbox vleft auto-fadein">
-    <q>Voice is just another JS application</q>
-    <div class="author">
-      Henning Schulzrinne<br>
-      &ndash; CTO, US FCC
-    </div>
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div class='big'><img src="images/yes.png" alt="RTC peer to peer" style='max-width: 100%' /></div>
+    </article>
+    <aside class="note">
+      <p>This looks much better.</p>
+      <p>it's got a nice fluffy cloud right in the middle.</p>
+      <p>As we'll find out, if only it were that simple...</p>
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Shopping list</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Protocols for communication: IETF</li>
+      <li>Standards for APIs: W3C</li>
+      <li>Media and communication stack: libjingle, VP8, Opus...</li>
+      <li>Design for a new communications ecosystem</li>
+    </ul>
   </article>
   <aside class="note">
-    <p>This is a quote from the current FCC CTO, who sees WebRTC replacing traditional telephony, as voice calling becomes just another web app.</p>
+    <p>A word about libjingle... Jingle is an extension of XMPP created by Google to enable audio and video for messaging. Libjingle is a C++ library, an implementation of Jingle initially developed for Google Talk.</p>
+    <p>A new ecosystem of WebRTC-enabled devices.</p>
   </aside>
 </slide>
 
@@ -139,21 +172,34 @@ URL: https://code.google.com/p/io-2012-slides
   </hgroup>
   <article style="height: 100%; position: relative">
     <ul class="tight" xstyle='margin: 0 1em 0 0'>
-      <li>Chrome</li>
-      <li>Chrome for Android</li>
-      <li>Firefox</li>
+      <li>Chrome and Chrome for Android</li>
+      <li>Firefox and Firefox for Android</li>
       <li>Opera</li>
       <li>Native <a href="https://code.google.com/p/libjingle/source/browse/trunk/talk/app/webrtc/java/src/org/webrtc/PeerConnection.java">Java</a> and Objective-C bindings</li>
     </ul>
     <img src="images/android.jpg" alt="Firefox/Chrome interoperability" style="position: absolute; right: 2em; top: -82px; width: 320px" />
     <img src="images/firefoxChrome.jpg" alt="Firefox/Chrome interoperability" style="position: absolute; bottom: 5em; width: 45%;" />
   </article>
-  <aside><p>So we're working on delivering on that promise. And right now, you can write a single WebRTC app that connects Chrome, Chrome for Android, and Firefox, and soon, Opera.
-      Just this week, Mozilla released Firefox 22 to Beta, the first version with WebRTC enabled, and this will be rolled out to all users shortly. So within a few weeks, there will be
-    </p>
+  <aside>
+    <p>Where are we now?</p>
   </aside>
 </slide>
 
+<slide>
+  <hgroup>
+    <h2>Qt moving to Chromium</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Framework for cross-platform/device native and embedded apps</li>
+      <li>Qt WebKit => Qt WebEngine</li>
+      <li>Multimedia and new HTML5 features such as WebRTC working out-of the-box</li>
+    </ul>
+  </article>
+  <aside class="note">
+    <p>The Qt framework (for building cross-platform/device native and embedded apps, now owned by Digia) is moving from Qt WebKit to Qt WebEngine, based on Chromium</p>
+  </aside>
+</slide>
 
 <slide class="nobackground">
   <article class="fill flexbox vcenter">
@@ -165,23 +211,60 @@ URL: https://code.google.com/p/io-2012-slides
   </aside>
 </slide>
 
-<slide class="nobackground">
-  <article class="fill flexbox vcenter">
-  <img src="images/logos.png" alt="Apps using WebRTC" />
+<slide class="segue dark quote nobackground">
+  <aside class="gdbar right bottom"><img src="images/google_developers_icon_128.png"></aside>
+  <article class="flexbox vleft auto-fadein">
+    <q>Voice is just another JS application</q>
+    <div class="author">
+      Henning Schulzrinne<br>
+      &ndash; CTO, US FCC
+    </div>
   </article>
   <aside class="note">
-    <p>So here are just a few of the companies that are going after this opportunity and building their businesses around WebRTC.</p>
+    <p>The impact could be profound.</p>
+    <p>The end of telephony as we know it? Time will tell</p>
   </aside>
 </slide>
+
+<slide class="nobackground">
+  <article class="fill flexbox vcenter">
+    <div><a href="blog.vline.com/post/61581986806/live-tv-interview-powered-by-vline-customer-in-quality" title="vLine blog post" style="border-bottom: none;"><img src="images/skyLarge.jpg" alt="Sky TV interview done via WebRTC" style="width: 100%;" /></a></div>
+  </article>
+  <aside class="note">
+  <p>Video chat, games, messaging -- imagine a scientific app using sensors on a low spec device running Chrome, collaborative editing suite for broadcast</p>
+  <p>Just last month saw the first live TV interview done via WebRTC</p>
+  </aside>
+</slide>
+
+<slide class="nobackground">
+  <article class="fill flexbox vcenter">
+    <div><a href="blog.vline.com/post/61581986806/live-tv-interview-powered-by-vline-customer-in-quality" title="vLine blog post" style="border-bottom: none;"><img src="images/skyKit.jpg" alt="Webcam and Yeti mic used for Sky interview" style="width: 100%;" /></a></div>
+  </article>
+  <aside class="note">
+  <p>And the kit to do that?</p>
+  <p>A hundred Euro Yeti mic and I webcam like the one I've got here</p>
+  </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div class='big'><img src="images/obTrucks.jpg" alt="Outdoor broadcast truck" style='width: 100%' /></div>
+      <footer class="source" style='position: absolute; bottom: 23px; left: 150px'><a href="https://en.wikipedia.org/wiki/File:BBC_HD_SNG.jpg" title="OB trucks">en.wikipedia.org/wiki/File:BBC_HD_SNG.jpg</a></footer>
+    </article>
+    <aside class="note">
+      <p>You don't need one of these!</p>
+    </aside>
+</slide>
+
 
 <slide class="segue dark nobackground">
   <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
   <hgroup class="auto-fadein">
-    <h2>The WebRTC APIs</h2>
+    <h2>What do we need for RTC?</h2>
     <h3></h3>
   </hgroup>
   <aside class="note">
-  <p>So that's the vision for WebRTC. Now let's dig into the APIs that WebRTC provides.</p>'
+    <p>So that's the vision for WebRTC. Now let's dig into the APIs that WebRTC provides.</p>
   </aside>
 </slide>
 
@@ -197,7 +280,7 @@ URL: https://code.google.com/p/io-2012-slides
   </ul>
     </article>
     <aside class="note">
-    <p>We can divide up the functions provided by WebRTC into about 3 categories - getting access to audio and video streams, making a connection to another endpoint and sending those streams, and lastly, sending application data.</p>
+    <p></p>
     </aside>
 </slide>
 
@@ -213,7 +296,6 @@ URL: https://code.google.com/p/io-2012-slides
   </ul>
   </article>
   <aside class="note">
-    <p>These are handled by 3 different objects in WebRTC - MediaStream, RTCPeerConnection, and RTCDataChannel.
   </aside>
 </slide>
 
@@ -224,6 +306,27 @@ URL: https://code.google.com/p/io-2012-slides
     <h3>Acquiring audio and video</h3>
   </hgroup>
   <aside class="note">
+    <p>Prime use case for WebRTC is... communication.</p>
+    <p>Prime example of that is voice and video chat.</p>
+    <p>What do we need to do for that?</p>
+    <p></p>
+  </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>What do we need?</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Streaming media: <code>MediaStream</code></li>
+      <li>Get local media: <code>navigator.getUserMedia()</code></li>
+    </ul>
+  </article>
+  <aside class="note">
+    <p>Need to work with streaming media.</p>
+    <p>The shopping list is getting longer...</p>
+    <p>A way to get local media.</p>
   </aside>
 </slide>
 
@@ -237,25 +340,24 @@ URL: https://code.google.com/p/io-2012-slides
       <li>Can contain multiple 'tracks'</li>
       <li>Obtain a MediaStream with <code>navigator.getUserMedia()</code></li>
     </ul>
-    <img src="images/mediaStream.png" alt="MediaStream diagram" style="width: 550px" />
   </article>
   <aside class="note">
   </aside>
 </slide>
 
-<!-- <slide class="nobackground">
+<slide class="nobackground">
   <article class="flexbox vcenter">
     <img src="images/mediaStream.png" alt="MediaStream diagram" style="width: 733px" />
   </article>
   </article>
   <aside class="note">
   </aside>
-</slide> -->
+</slide>
 
 <slide>
   <hgroup>
-    <h2>MediaStream</h2>
-    <h3>aka getUserMedia</h3>
+    <h2>gUM</h2>
+    <h3>It's pretty simple.</h3>
   </hgroup>
   <article>
     <pre class="prettyprint" data-lang="javascript">
@@ -275,16 +377,46 @@ function errorCallback(error) {
   </article>
 </slide>
 
+
 <slide class="nobackground">
   <article class="fill flexbox vcenter">
     <div class="bigger"><a href="http://www.simpl.info/gum" title="Simple getUserMedia demo">simpl.info/gum</a></div>
   </article>
   <aside class="note">
-    <p>Chrome, Firefox, Opera, Chrome and Firefox on Android.</p>
-    <p>If you run with HTTPS, or from an app, permission will only be asked for once.</p>
-    <p>Likewise with Chrome apps that ask for "audioCapture" and"videoCapture" permissions.</p>
+    <p>Chrome, Firefox, Chrome and Firefox on Android.</p>
+    <p>Not Opera right now -- which is in transition.</p>
+  </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>gUM permissions</h3>
+  </hgroup>
+  <article>
+    <ul>
+      <li>HTTPS</li>
+      <li>Chrome apps: <code>audioCapture</code> and <code>videoCapture</code> permissions</li>
+      <li>Chrome flag: <code>--use-fake-ui-for-media-stream</code></li>
+      <li>UI settings can be changed afterwards.</li>
+    </ul>
+  </article>
+  <aside class="note">
+   <p>If you run with HTTPS, or from an app, permission will only be asked for once.</p>
+    <p>Likewise with Chrome apps that ask for "audioCapture" and"videoCapture" permissions. Permission is only requested on installation.</p>
+    <p>Chrome flag: <code>--use-fake-ui-for-media-stream</code></p>
     <p>UI settings can be changed afterwards.</p>
   </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div class='big'><img src="images/file.png" alt="Don't use file:// URLs" style='max-width: 100%' /></div>
+    </article>
+    <aside class="note">
+      <p>A word of warning: you must run getUserMedia() from a server.</p>
+      <p>Otherwise you'll get a rather baffling PERMISSION_DENIED error.</p>
+      <p>There are efforts underway to provide better error messages.</p>
+    </aside>
 </slide>
 
 <!-- <slide class="nobackground">
@@ -366,28 +498,30 @@ function errorCallback(error) {
     </aside>
 </slide> -->
 
+
 <slide>
   <hgroup>
     <h2>Constraints</h2>
   </hgroup>
   <article>
-    <ul>
-      <li>Controls the contents of the MediaStream</li>
-      <li>Media type, resolution, frame rate</li>
+    <ul class="tight">
+      <li>Mandatory or optional</li>
+      <li>Resolution: width and height</li>
+      <ul class="tight">
+      <li>from a <a href="https://code.google.com/p/chromium/issues/detail?id=143631#c9" title="Constraints resolutions">fixed list</a></li>
+      <li>no cropping or scaling (yet)</li>
+      </ul>
+      <li>Frame rate</li>
+      <li>Facing mode: front or back camera</li>
+      <li>Source type: video camera, screen capture...</li>
+      <li>Source id</li>
+      <li>Volume</li>
     </ul>
-    <pre class="prettyprint" data-lang="javascript">
-video: {
-  mandatory: {
-    minWidth: 640,
-    minHeight: 360
-  },
-  optional [{
-    minWidth: 1280,
-    minHeight: 720
-  }]
-}
- </pre>
   </article>
+  <aside class="note">
+    <p>Constraints allow us to impose constraints on media</p>
+    <p>In the simple gUM example, we chose to get video only, so as to avoid feedback.</p>
+  </aside>
 </slide>
 
 <slide>
@@ -396,6 +530,41 @@ video: {
     <article class="fill flexbox vcenter">
       <div><a href="https://simpl.info/getusermedia/constraints/" title="getUserMedia constraints demo">simpl.info/getusermedia/constraints</a></div>
     </article>
+    <aside class="note">
+      <p>Constraints can let us choose resolution.</p>
+      <p>Note that scaling and cropping aren't supported by browsers.</p>
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+  </hgroup>
+    <article class="fill flexbox vcenter">
+      <div><a href="https://simpl.info/getusermedia/constraints/" title="getUserMedia constraints demo">simpl.info/getusermedia/sources
+</a></div>
+    </article>
+    <aside class="note">
+      <p>Constraints also let us choose media source.</p>
+      <p>[Run, plug in camera, reload page, the show on Android Beta.]</p>
+      <p>By the way, if you want to install Chrome Beta on your Android</p>
+    </aside>
+</slide>
+
+
+<slide>
+  <hgroup>
+    <h2>Facing mode, applyConstraints()</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Choose source: <a href="http://dev.w3.org/2011/webrtc/editor/getusermedia.html#idl-def-VideoFacingModeEnum" title="W3C facing mode draft spec">spec</a></li>
+      <li>Apply constraints from JavaScript: <a href="http://dev.w3.org/2011/webrtc/editor/getusermedia.html#widl-MediaStreamTrack-applyConstraints-void-MediaTrackConstraints-constraints" title="W3C applyConstraints() draft spec">spec</a></li>
+    </ul>
+  </article>
+  <aside class="note">
+    <p>With facing mode: </p>
+    <p>With applyConstraints(): width, height, framerate, facingMode, etc.</p>
+  </aside>
 </slide>
 
 <slide>
@@ -452,7 +621,7 @@ navigator.webkitGetUserMedia(constraints, gotStream);
 <!-- <a href="https://simpl.info/screencapture/" title="Screen capture–RTCPeerConnection demo">simpl.info/screencapture</a> -->
   </article>
   <aside class="note">
-    <p</p>
+    <p>Tab capture is also available from Chrome apps.</p>
   </aside>
 </slide>
 
@@ -527,6 +696,23 @@ function gotAudio(stream) {
     <p>'Join the boxes' architecture.</p>
   </aside>
 </slide> -->
+
+<slide>
+  <hgroup>
+    <h2>Media Stream Recording API</h2>
+  </hgroup>
+    <article class="fill flexbox vcenter">
+    <ul>
+      <li>Demo simpl.info/mediarecorder</li>
+      <li><a href="https://dvcs.w3.org/hg/dap/raw-file/default/media-stream-capture/MediaRecorder.html" title="W3C MediaRecorder draft spec">Spec</a></li>
+      <li>Chrome <a href="https://groups.google.com/a/chromium.org/forum/?fromgroups=#!topic/blink-dev/2l_G_apqk30" title="blink-dev Media Stream Recording API Intent to Implement discussion">Intent to Implement</a></li>
+      <li><a href="http://www.w3.org/TR/streams-api/" title="W3C Streams API draft spec">Streams API</a></li>
+    </ul>
+    </article>
+    <aside class="note">
+      <p>How does it work? A MediaRecorder is created which takes an audio stream from navigator.getUserMedia(). When a blob of recorded data becomes available (set to occur after two seconds) this is used to set the src of the audio element, using window.URL.createObjectURL().</p>
+    </aside>
+</slide>
 
 <slide class="segue dark nobackground">
   <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>

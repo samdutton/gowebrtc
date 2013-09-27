@@ -8,7 +8,7 @@ var SLIDE_CONFIG = {
     usePrettify: true, // Default: true
     enableSlideAreas: true, // Default: true. False turns off the click areas on either slide of the slides.
     enableTouch: true, // Default: true. If touch support should enabled. Note: the device must support touch.
-    analytics: 'UA-2630780-1', // TODO: Using this breaks GA for some reason (probably requirejs). Update your tracking code in template.html instead.
+    analytics: 'UA-44413410-1', // TODO: Using this breaks GA for some reason (probably requirejs). Update your tracking code in template.html instead.
     favIcon: 'images/google_developers_logo_tiny.png',
     fonts: [
       'Open Sans:regular,semibold,italic,italicsemibold',
@@ -18,14 +18,7 @@ var SLIDE_CONFIG = {
   },
 
   // Author information
-  presenters: [{
-    name: 'Justin Uberti',
-    company: 'WebRTC Tech Lead, Google',
-    gplus: 'https://plus.google.com/103619602351433955946/posts',
-    twitter: '@juberti',
-/*    www: 'http://www.you.com', */
-    github: 'https://github.com/juberti'
-  },
+  presenters: [
   {
     name: 'Sam Dutton',
     company: 'Developer Advocate, Google Chrome',
