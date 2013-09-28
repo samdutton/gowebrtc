@@ -75,6 +75,9 @@ div#multipleInputs img {
     top: 55%;
 }
 
+li {
+  line-height: 1.5em;
+}
 
 ol li {
 margin: 0 0 1.4em 0;
@@ -93,7 +96,8 @@ ul.faded li.built {
 opacity: 1;
 }
 
-ul.tight li {
+ol.tight li, ul.tight li  {
+line-height: 1.2em;
 margin: 0 0 0.7em -1.5px;
 padding: 0 0 0 -1.8px;
 }

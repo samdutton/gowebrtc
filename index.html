@@ -402,7 +402,7 @@ function errorCallback(error) {
   </article>
   <aside class="note">
    <p>If you run with HTTPS, or from an app, permission will only be asked for once.</p>
-    <p>Likewise with Chrome apps that ask for "audioCapture" and"videoCapture" permissions. Permission is only requested on installation.</p>
+    <p>Likewise with Chrome apps that ask for "audioCapture" and"videoCapture" permissions. Permission is only requested on installation. gUM isn't available for Chrome extensions at this point, though I believe some have been whitelisted.</p>
     <p>Chrome flag: <code>--use-fake-ui-for-media-stream</code></p>
     <p>UI settings can be changed afterwards.</p>
   </aside>
@@ -557,8 +557,8 @@ function errorCallback(error) {
   </hgroup>
   <article>
     <ul>
-      <li>Choose source: <a href="http://dev.w3.org/2011/webrtc/editor/getusermedia.html#idl-def-VideoFacingModeEnum" title="W3C facing mode draft spec">spec</a></li>
-      <li>Apply constraints from JavaScript: <a href="http://dev.w3.org/2011/webrtc/editor/getusermedia.html#widl-MediaStreamTrack-applyConstraints-void-MediaTrackConstraints-constraints" title="W3C applyConstraints() draft spec">spec</a></li>
+      <li>Choose source: <a href="http://www.w3.org/TR/mediacapture-streams/#video-facing-mode-enum" title="W3C facing mode draft spec">spec</a></li>
+      <li>Apply constraints from JavaScript: <a href="http://www.w3.org/TR/mediacapture-streams/#widl-MediaStreamTrack-applyConstraints-void-MediaTrackConstraints-constraints" title="W3C applyConstraints() draft spec">spec</a></li>
     </ul>
   </article>
   <aside class="note">
@@ -791,20 +791,8 @@ function gotAudio(stream) {
     <img src="images/webrtcArchitecture.png" alt="WebRTC architecture diagram" />
   </article>
   <aside class="note">
-  <p>There's a lot of moving parts under the hood. Fortunately, with RTCPeerConnection, this is mostly abstracted away. You create a RTCPeerConnection, add your own MediaStreams to it, call a couple methods to set up the right parameters for the call, and off you go. Sam's going to now show us a super-simple example of RTCPeerConnection.'
+    <p>There's a lot of moving parts under the hood. Fortunately, with RTCPeerConnection, this is mostly abstracted away. You create a RTCPeerConnection, add your own MediaStreams to it, call a couple methods to set up the right parameters for the call, and off you go.</p>
   </aside>
-</slide>
-
-<slide>
-  <hgroup>
-    <h2>RTCPeerConnection initialisation</h2>
-  </hgroup>
-  <article>
-    <ul>
-      <li>Ascertain local media conditions: resolution, codec capabilities...</li>
-      <li>Get potential network addresses for the application's host: candidates</li>
-    </ul>
-  </article>
 </slide>
 
 <slide class="nobackground">
@@ -872,11 +860,11 @@ function gotAudio(stream) {
     <h2>Signaling: how?</h2>
   </hgroup>
   <article>
-  <ul>
+  <ul class='tight'>
     <li>Needs to be bidirectional</li>
-    <li>Repeated polling: OK but not scalable</li>
-    <li>HTTP request/response, but many hacks: <a href="https://en.wikipedia.org/wiki/Comet_(programming)" title="Wikipedia article about Comet">long polling / Comet</a></li>
-    <li><a href="http://www.html5rocks.com/en/tutorials/eventsource/basics/" title="Server-sent Events article on HTML5 Rocks">EventSource</a> (aka Server-sent events): <a href="http://simpl.info/es" title="EventSource demo">demo</a></li>
+    <li>Repeated polling: inefficient and not scalable</li>
+    <li><a href="https://en.wikipedia.org/wiki/Comet_(programming)" title="Wikipedia article about Comet">Long polling / Comet</a> (as used by Google App Engine)</li>
+    <li>XHR + <a href="http://www.html5rocks.com/en/tutorials/eventsource/basics/" title="Server-sent Events article on HTML5 Rocks">EventSource</a> (aka Server-sent events): <a href="http://simpl.info/es" title="EventSource demo">demo</a></li>
     <li>WebSocket:
     <ul class='tight'>
       <li>more natural solution &mdash; it's bidirectional!</li>
@@ -902,7 +890,7 @@ function gotAudio(stream) {
     <li>Simple to exchange messages</li>
     <li>Built-in concept of 'rooms'</li>
   </ul>
-  <p><a href="https://bitbucket.org/webrtc/codelab/complete/step5" title="Codelab walkthrough to build signaling server with Socket.io">Codelab</a></p>
+  <p><a href="https://bitbucket.org/webrtc/codelab/src/master/complete/step5" title="Codelab walkthrough to build signaling server with Socket.io">Codelab</a></p>
   <p><a href="http://samdutton-nodertc.jit.su" title="Video chat application using Socket.io for signaling">Live example</a></p>
   </article>
     <aside class="note">
@@ -911,21 +899,33 @@ function gotAudio(stream) {
 
 <slide>
   <hgroup>
+    <h2>RTCPeerConnection initialisation</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Ascertain local media conditions: resolution, codec capabilities...</li>
+      <li>Get potential network addresses for the application's host: candidates</li>
+    </ul>
+  </article>
+</slide>
+
+<slide>
+  <hgroup>
     <h2>Find me a candidate</h2>
   </hgroup>
   <article>
     <ol>
-      <li>Caller creates RTCPeerConnection object</li>
-      <li>If success, callback passed IceCandidate</li>
-      <li>Caller sends IceCandidate to callee</li>
-      <li>Callee creates a new remote IceCandidate, adds to remote description</li>
-      <li>Ping!</li>
+      <li>Fred and Wilma create RTCPeerConnection objects</li>
+      <li>If success, <code>icecandidate</code> events start propagating</li>
+      <li>Fred starts serialises IceCandidates and sends them to Wilma</li>
+      <li>Wilma gets Fred's IceCandidates, calls <code>addIceCandidate()</code></li>
+      <li>Wilma serialises IceCandidates and sends them to Fred</li>
+      <li>Fred gets Wilma's IceCandidates, calls <code>addIceCandidate()</code></li>
     </ol>
   </article>
     <aside class="note">
-    <p>When the RTCPeerConnection object has been successfully created by the caller, the onIceCallback callback is called (in this example).</p>
-      <p>This callback is passed a candidate object, which the caller then serialises and sends to the callee.</p>
-      <p>On receipt of this message, the callee creates a new IceCandidate and calls processIceMessage() on it.</p>
+    <p>Once Fred and Wilma have a signaling channel, they can start sending network and media metadata, to make a direct connection and to start streaming audio and video.</p>
+    <p>This is the process of exchanging network data.</p>
     </aside>
 </slide>
 
@@ -934,13 +934,14 @@ function gotAudio(stream) {
     <h2>Make me an offer</h2>
   </hgroup>
   <article>
-    <ol>
-      <li>RTCPeerConnection creates offer</li>
-      <li>Caller sends offer</li>
-      <li>Callee receives offer</li>
-      <li>RTCPeerConnection creates answer</li>
-      <li>Callee sends answer</li>
-      <li>Caller receives answer</li>
+    <ol class='tight'>
+      <li>Fred calls <code>createOffer()</code></li>
+      <li>In the callback, Fred calls <code>setLocalDescription()</code></li>
+      <li>Fred serialises the offer and sends it Wilma</li>
+      <li>Wilma calls <code>setRemoteDescription()</code> with the offer</li>
+      <li>Wilma calls <code>createAnswer()</code></li>
+      <li>Wilma calls <code>setLocalDescription()</code> with the answer and sends it to Fred</li>
+      <li>Fred receives answer and calls <code>setRemoteDescription()</code></li>
       <li>Ping!</li>
     </ol>
   </article>
@@ -948,9 +949,7 @@ function gotAudio(stream) {
       <ol>
         <li>The caller creates an RTCPeerConnection object and sets the local description.</li>
         <li>Caller uses RTCPeerConnection to create an offer. An offer is a blob -- a local session description in SDP format.</li>
-        <li>The offer is serialised and communicated via the Signaling channel to the callee. </li>
-        <li>When the callee gets the offer message, they create an RTCPeerConnection object and set the remote description from the offer.</li>
-        <li>The callee then uses its RTCPeerConnection to creates an answer (passing it the offer) and sends that back to the caller.</li>
+        <li>The offer or answer can be edited, for example to tweak codecs.</li>
       </ol>
     </aside>
 </slide>
@@ -987,10 +986,38 @@ a=ice-pwd:xdQEccP40E+P0L5qTyzDgfmW
 
 <slide>
   <hgroup>
-    <h2>Making the connection</h2>
+    <h2>Candidate objects</h2>
+  </hgroup>
+  <article>
+<pre class="prettyprint" data-lang="nice">
+{
+  'type':'candidate',
+  'label':1,
+  'id':'video',
+  'candidate':'a=candidate:1274936569 1 udp 1845501695 2.96.35.15 63579
+               typ srflx raddr 192.168.0.3 rport 63579 generation 0\r\n'
+}
+...
+{
+  'type':'candidate',
+  'label':0,
+  'id':'audio',
+  'candidate':'a=candidate:3802297132 1 udp 2113937151 192.168.0.3 63579
+               typ host generation 0\r\n'
+}
+
+</pre>
+  </article>
+    <aside class="note">
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>RTCPeerConnection + signaling</h2>
   </hgroup>
   <article class="flexbox vcenter">
-<a href="http://www.w3.org/TR/webrtc/#simple-example" title="Simple W3C Signaling example">w3.org/TR/webrtc/#simple-example</a>
+<a href="http://www.w3.org/TR/webrtc/#simple-peer-to-peer-example" title="Simple W3C Signaling example">w3.org/TR/webrtc/#simple-peer-to-peer-example</a>
   </article>
     <aside class="note">
       <p>1. Fred creates an RTCPeerConnection object.
@@ -1002,6 +1029,15 @@ a=ice-pwd:xdQEccP40E+P0L5qTyzDgfmW
   7. The success callback for createAnswer() is passed a local session description for Wilma (which she'll uses as the answer) and she sets this as the local description by calling setLocalDescription().
   8. Wilma then uses the signaling mechanism to pass her answer session description back to Fred.
   9. Fred sets that as the remote session description using setRemoteDescription().</p>
+    </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div><a href="http://simpl.info/rtcpeerconnection/munge" title="Edit SDP values">simpl.info/rtcpeerconnection/munge</a></div>
+    </article>
+    <aside class="note">
+    <p>This demo shows offer and answer SDP, which can be edited.</p>
     </aside>
 </slide>
 
@@ -1025,6 +1061,19 @@ a=ice-pwd:xdQEccP40E+P0L5qTyzDgfmW
     <p>This is the best place to start with a fully featured WebRTC app: RTCPeerConnection, with signaling provided by XHR and DataChannel.</p>
     </aside>
 </slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div><a href="http://simpl.info/rtcpeerconnection/multi
+" title="RTCPeerConnection as input to RTCPeerConnection">simpl.info/rtcpeerconnection/multi</a></div>
+    </article>
+    <aside class="note">
+    <p>Hot off the press...</p>
+    </aside>
+</slide>
+
+
+
 
 <slide class="segue dark nobackground">
   <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
@@ -1610,25 +1659,19 @@ conn.on('open', function(){
     </aside>
 </slide> -->
 
-<slide class="nobackground">
-    <article class="fill flexbox vcenter">
-      <div class='big'><a href="http://apprtc.appspot.com/?r=io&hd=true" title="">Chris Wilson <strong>LIVE!</strong></a></div>
-    </article>
-    <aside class="note">
-      <p>Before we wrap up, we have a special treat for you. I'd like to introduce Chris Wilson - a colleague of ours, who worked on the original Mosaic browser, and is a bit of a musician. Chris is joining us today, via WebRTC, to show off our support for HD video, and crystal clear, fullband audio. Take it away, Chris!</p>
-    </aside>
-</slide>
 
 <slide>
   <hgroup>
     <h2>More Information</h2>
   </hgroup>
   <article>
-  <ul>
-    <li>Justin Uberti: <a href="http://www.youtube.com/watch?v=E8C8ouiXHHk" title="Video of Google I/O 2012 presentation">Google I/O presentation video</a></li>
+  <ul class='tight'>
+    <li>WebRTC and Web Audio resources list: <a href="http://bit.ly/webrtcwebaudio" title="WebRTC and Web Audio standards, documentation, tutorials, demos, samples and applications">bit.ly/webrtcwebaudio</a></li>
+    <li><a href="http://www.youtube.com/watch?v=p2HzZkd2A40" title="Video of Google I/O 2013 WebRTC session on YouTube">Google I/O 2013 WebRTC presentation</a></li>
+    <li>Justin Uberti: <a href="http://www.youtube.com/watch?v=E8C8ouiXHHk" title="Video of Google I/O 2012 presentation">Google I/O 2012 presentation video</a></li>
     <li>Cullen Jennings video: <a href="http://vimeo.com/47682405" title="IETF and W3C standardisation discussion">HTML5 WebRTC</a></li>
     <li>HTML5 Rocks:</li>
-    <ul>
+    <ul class='tight'>
       <li><a href="http://www.html5rocks.com/en/tutorials/getusermedia/intro/" title="HTML5 Rocks article about getUserMedia">Capturing audio and video in HTML5</a></li>
       <li><a href="http://www.html5rocks.com/en/tutorials/webrtc/basics/" title="HTML5 Rocks article about WebRTC">Getting Started With WebRTC</a></li>
       <li><a href="http://www.html5rocks.com/en/search?q=webrtc" title="HTML5 content tagged WebRTC">Updates</a></li>
