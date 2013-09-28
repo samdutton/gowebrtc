@@ -62,6 +62,23 @@ URL: https://code.google.com/p/io-2012-slides
     </aside>
 </slide>
 
+<slide class="segue dark quote nobackground">
+  <aside class="gdbar right bottom"><img src="images/google_developers_icon_128.png"></aside>
+  <article class="flexbox vleft auto-fadein">
+    <q>
+      WebRTC is a new front in the long war for an open and unencumbered web
+    </q>
+    <div class="author">
+      Brendan Eich<br>
+      &ndash; Mozilla CTO and inventor of JavaScript
+    </div>
+  </article>
+  <aside class="note">
+    <p>
+   </p>
+  </aside>
+</slide>
+
 <slide class="nobackground">
     <article class="fill flexbox vcenter">
       <div>Real-time communication built into the browser</div>
@@ -106,23 +123,6 @@ URL: https://code.google.com/p/io-2012-slides
       <p>And for reasons that will become obvious...</p>
       <p>WebRTC had to be peer to peer.</p>
     </aside>
-</slide>
-
-<slide class="segue dark quote nobackground">
-  <aside class="gdbar right bottom"><img src="images/google_developers_icon_128.png"></aside>
-  <article class="flexbox vleft auto-fadein">
-    <q>
-      WebRTC is a new front in the long war for an open and unencumbered web
-    </q>
-    <div class="author">
-      Brendan Eich<br>
-      &ndash; Mozilla CTO and inventor of JavaScript
-    </div>
-  </article>
-  <aside class="note">
-    <p>
-   </p>
-  </aside>
 </slide>
 
 <slide class="nobackground">
@@ -540,7 +540,7 @@ function errorCallback(error) {
   <hgroup>
   </hgroup>
     <article class="fill flexbox vcenter">
-      <div><a href="https://simpl.info/getusermedia/constraints/" title="getUserMedia constraints demo">simpl.info/getusermedia/sources
+      <div><a href="https://simpl.info/getusermedia/sources/" title="getUserMedia constraints demo">simpl.info/getusermedia/sources
 </a></div>
     </article>
     <aside class="note">
@@ -627,8 +627,8 @@ navigator.webkitGetUserMedia(constraints, gotStream);
 
 <slide class="nobackground">
     <article class="fill flexbox vcenter">
-      <div><a href="https://html5-demos.appspot.com/static/getusermedia/screenshare.html" title="Screen sharing demo">gUM screencapture</a></div>
-      <!-- <div><a href="http://updates.html5rocks.com/2012/12/Screensharing-with-WebRTC" title="HTML5 Rocks update demoing tab capture">Tab capture: chrome.tabCapture</a></div> -->
+      <div style='margin: 0 0 2em 0'><a href="https://html5-demos.appspot.com/static/getusermedia/screenshare.html" title="Screen sharing demo">Screen sharing</a></div>
+      <div><a href="http://updates.html5rocks.com/2012/12/Screensharing-with-WebRTC" title="HTML5 Rocks update demoing tab capture">Tab capture: chrome.tabCapture</a></div>
     </article>
     <aside class="note">
     <p>Extremely useful for doing IT support for your extended family!</p>
@@ -701,12 +701,29 @@ function gotAudio(stream) {
   <hgroup>
     <h2>Media Stream Recording API</h2>
   </hgroup>
-    <article class="fill flexbox vcenter">
+    <article>
     <ul>
-      <li>Demo simpl.info/mediarecorder</li>
+      <li>Demo: <a href="http://simpl.info/mediarecorder" title="Media Stream Recording demo">simpl.info/mediarecorder</a></li>
       <li><a href="https://dvcs.w3.org/hg/dap/raw-file/default/media-stream-capture/MediaRecorder.html" title="W3C MediaRecorder draft spec">Spec</a></li>
       <li>Chrome <a href="https://groups.google.com/a/chromium.org/forum/?fromgroups=#!topic/blink-dev/2l_G_apqk30" title="blink-dev Media Stream Recording API Intent to Implement discussion">Intent to Implement</a></li>
       <li><a href="http://www.w3.org/TR/streams-api/" title="W3C Streams API draft spec">Streams API</a></li>
+    </ul>
+    </article>
+    <aside class="note">
+      <p>How does it work? A MediaRecorder is created which takes an audio stream from navigator.getUserMedia(). When a blob of recorded data becomes available (set to occur after two seconds) this is used to set the src of the audio element, using window.URL.createObjectURL().</p>
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Media Stream Image Capture API</h2>
+  </hgroup>
+    <article>
+    <ul>
+      <li><del>Demo</del></li>
+      <li><a href="http://gmandyam.github.io/image-capture/" title="W3C Media Stream Image Capture draft spec">Spec</a></li>
+      <li><code>getFrame()</code> creates an <code>ImageData</code> object available in <code>onframegrab</code></li>
+      <li><code>takePhoto()</code> creates a Blob available in <code>onphoto</code></li>
     </ul>
     </article>
     <aside class="note">
@@ -778,46 +795,214 @@ function gotAudio(stream) {
   </aside>
 </slide>
 
-<!-- <slide>
+<slide>
   <hgroup>
-    <h2>This is embarrassing...</h2>
+    <h2>RTCPeerConnection initialisation</h2>
   </hgroup>
   <article>
     <ul>
-      <li>PeerConnection</li>
-      <li>DeprecatedPeerConnection</li>
-      <li>PeerConnection00</li>
-      <li>In Chrome now: <strong>webkitRTCPeerConnection</strong></li>
-      <li>When the dust settles: <strong>RTCPeerConnection</strong></li>
+      <li>Ascertain local media conditions: resolution, codec capabilities...</li>
+      <li>Get potential network addresses for the application's host: candidates</li>
     </ul>
   </article>
-</slide> -->
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div>Peer to peer &mdash; but we need servers  :^\</div>
+    </article>
+    <aside class="note">
+      <p>So discovery and Signaling require intermediary servers to set up a call.</p>
+      <p>At this point in history there's no way to shout into the Internet, 'Exchange streaming data with my friend's computer!'</p>
+    </aside>
+</slide>
 
 <slide>
   <hgroup>
-    <h2>RTCPeerConnection sample</h2>
-      </hgroup>
+    <h2>What does WebRTC need servers for?</h2>
+  </hgroup>
   <article>
-    <pre class="prettyprint" data-lang="javascript">
-pc = new RTCPeerConnection(null);
-pc.onaddstream = gotRemoteStream;
-pc.addStream(localStream);
-pc.createOffer(gotOffer);
-
-function gotOffer(desc) {
-  pc.setLocalDescription(desc);
-  sendOffer(desc);
-}
-
-function gotAnswer(desc) {
-  pc.setRemoteDescription(desc);
-}
-
-function gotRemoteStream(e) {
-  attachMediaStream(remoteVideo, e.stream);
-}
-</pre>
+    <ul>
+      <li>Exchange metadata to coordinate communication: signaling</li>
+      <li>Cope with NATs and firewalls: STUN and TURN</li>
+    </ul>
   </article>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>JSEP architecture</h2>
+  </hgroup>
+  <article class="flexbox vcenter">
+    <img src="images/jsep.png" alt="JSETP architecture diagram">
+  </article>
+    <aside class="note">
+    <p>Here's a diagram that demonstrates this process. The caller sends a session description to its signaling server in the cloud, which then forwards this on to the callee. Similarly, the callee then sends its own session description back through the cloud to the caller. Once each side has given the session descriptions to RTCPeerConnection, the peer-to-peer link is established and media can flow.</p>
+  </aside>
+</slide>
+
+<slide class="nobackground">
+  <hgroup>
+    <h2>Signaling</h2>
+  </hgroup>
+  <article>
+    <ul>
+      <li>Need to exchange 'session description' objects:</li>
+      <ul class="tight">
+        <li>What media formats I support, what I want to send</li>
+        <li>Network information for peer-to-peer setup</li>
+      </ul>
+      <li>Can use any messaging mechanism</li>
+      <li>Can use any messaging protocol</li>
+      <li>...and can be used for application data</li>
+    </ul>
+  </article>
+  <aside class="note">
+    <p>Signaling is the process of coordinating communication. Similar to, when you make a phone call, the phone system sends a message to the person you're calling indicating that there's an incoming call. Then, when you answer the call, a message is sent back indicating the call is live.</p>
+    <p>The same is true for WebRTC. A message needs to get sent by each side indicating the parameters they want to use for the call. This is called a "session description", and it includes a bunch of details regarding codecs, encryption, network information, etc.</p>
+    <p>The details aren't critical for most apps; they just need to exchange these messages in some way. The mechanism is up to the app - it can use WebSocket, XHR and Server-sent Events, whatever it wants to use.</p>
+    <p>Similarly, the exact protocol through which these are exchanged is also up to the app - many apps will send these messages as JSON, although some apps may use the standard SIP or XMPP protocols.</p>
+  </aside>
+</slide>
+
+
+
+<slide>
+  <hgroup>
+    <h2>Signaling: how?</h2>
+  </hgroup>
+  <article>
+  <ul>
+    <li>Needs to be bidirectional</li>
+    <li>Repeated polling: OK but not scalable</li>
+    <li>HTTP request/response, but many hacks: <a href="https://en.wikipedia.org/wiki/Comet_(programming)" title="Wikipedia article about Comet">long polling / Comet</a></li>
+    <li><a href="http://www.html5rocks.com/en/tutorials/eventsource/basics/" title="Server-sent Events article on HTML5 Rocks">EventSource</a> (aka Server-sent events): <a href="http://simpl.info/es" title="EventSource demo">demo</a></li>
+    <li>WebSocket:
+    <ul class='tight'>
+      <li>more natural solution &mdash; it's bidirectional!</li>
+      <li>supported by all browsers that support WebRTC, desktop and mobile</li>
+      <li>use TLS: for security and to avoid proxy problems</li>
+      <li>for more information: see Ilya Grigorik's <a href="http://chimera.labs.oreilly.com/books/1230000000545/ch17.html#_http_upgrade_negotiation" title="Chapter from forthcoming O'Reilly book: High Performance Browser Networking">forthcoming O'Reilly chapter</a></li>
+      <li>Peter Lubber's <a href="http://refcardz.dzone.com/refcardz/html5-websocket" title="WebSocket Cheat Sheet">WebSocket Cheat Sheet</a></li>
+    </ul>
+    </li>
+  </ul>
+  </article>
+    <aside class="note">
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Signaling with Node and Socket.io</h2>
+  </hgroup>
+  <article>
+  <ul>
+    <li>Socket.io uses WebSocket with fallbacks</li>
+    <li>Simple to exchange messages</li>
+    <li>Built-in concept of 'rooms'</li>
+  </ul>
+  <p><a href="https://bitbucket.org/webrtc/codelab/complete/step5" title="Codelab walkthrough to build signaling server with Socket.io">Codelab</a></p>
+  <p><a href="http://samdutton-nodertc.jit.su" title="Video chat application using Socket.io for signaling">Live example</a></p>
+  </article>
+    <aside class="note">
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Find me a candidate</h2>
+  </hgroup>
+  <article>
+    <ol>
+      <li>Caller creates RTCPeerConnection object</li>
+      <li>If success, callback passed IceCandidate</li>
+      <li>Caller sends IceCandidate to callee</li>
+      <li>Callee creates a new remote IceCandidate, adds to remote description</li>
+      <li>Ping!</li>
+    </ol>
+  </article>
+    <aside class="note">
+    <p>When the RTCPeerConnection object has been successfully created by the caller, the onIceCallback callback is called (in this example).</p>
+      <p>This callback is passed a candidate object, which the caller then serialises and sends to the callee.</p>
+      <p>On receipt of this message, the callee creates a new IceCandidate and calls processIceMessage() on it.</p>
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Make me an offer</h2>
+  </hgroup>
+  <article>
+    <ol>
+      <li>RTCPeerConnection creates offer</li>
+      <li>Caller sends offer</li>
+      <li>Callee receives offer</li>
+      <li>RTCPeerConnection creates answer</li>
+      <li>Callee sends answer</li>
+      <li>Caller receives answer</li>
+      <li>Ping!</li>
+    </ol>
+  </article>
+    <aside class="note">
+      <ol>
+        <li>The caller creates an RTCPeerConnection object and sets the local description.</li>
+        <li>Caller uses RTCPeerConnection to create an offer. An offer is a blob -- a local session description in SDP format.</li>
+        <li>The offer is serialised and communicated via the Signaling channel to the callee. </li>
+        <li>When the callee gets the offer message, they create an RTCPeerConnection object and set the remote description from the offer.</li>
+        <li>The callee then uses its RTCPeerConnection to creates an answer (passing it the offer) and sends that back to the caller.</li>
+      </ol>
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>An RTCSessionDescription</h2>
+  </hgroup>
+  <article>
+<pre class="prettyprint" data-lang="ugh">
+v=0
+o=- 7614219274584779017 2 IN IP4 127.0.0.1
+s=-
+t=0 0
+a=group:BUNDLE audio video
+a=msid-semantic: WMS
+m=audio 1 RTP/SAVPF 111 103 104 0 8 107 106 105 13 126
+c=IN IP4 0.0.0.0
+a=rtcp:1 IN IP4 0.0.0.0
+a=ice-ufrag:W2TGCZw2NZHuwlnf
+a=ice-pwd:xdQEccP40E+P0L5qTyzDgfmW
+...
+</pre>
+
+<p>Want to know what all this SDP gobbledygook actually means?</p>
+<p>Take a look at the <a href="http://datatracker.ietf.org/doc/draft-nandakumar-rtcweb-sdp/?include_text=1" title="IETF SDP examples">IETF examples</a>.</p>
+
+  </article>
+    <aside class="note">
+    <p>In case you're wondering, the insides of a RTCSessionDescription look like this. While apps can manipulate this information for fine-grained control, we've tried to make it so that most apps don't need to worry about this.</p>
+    <p>Bear in mind that WebRTC is designed so that the offer or answer can be tweaked before being set as the local or remote description, by editing the values in the SDP text. For example, the preferAudioCodec() function in apprtc.appspot.com can be used to set the default codec and bitrate. SDP is somewhat painful to manipulate with JavaScript, and there is discussion about whether future versions of WebRTC should use JSON instead, but there are some advantages to staying with SDP. </p>
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Making the connection</h2>
+  </hgroup>
+  <article class="flexbox vcenter">
+<a href="http://www.w3.org/TR/webrtc/#simple-example" title="Simple W3C Signaling example">w3.org/TR/webrtc/#simple-example</a>
+  </article>
+    <aside class="note">
+      <p>1. Fred creates an RTCPeerConnection object.
+  2. Fred creates an offer (an SDP session description) with the RTCPeerConnection createOffer() method.
+  3. Fred calls setLocalDescription() with the offer, to set local configuration.
+  4. Fred stringifies the offer and uses a signaling mechanism to send it to Wilma.
+  5. Wilma calls setRemoteDescription() with Fred's offer (the remote session description) so her RTCPeerConnection knows Fred's setup.
+  6. Wilma also calls createAnswer() with the offer.
+  7. The success callback for createAnswer() is passed a local session description for Wilma (which she'll uses as the answer) and she sets this as the local description by calling setLocalDescription().
+  8. Wilma then uses the signaling mechanism to pass her answer session description back to Fred.
+  9. Fred sets that as the remote session description using setRemoteDescription().</p>
+    </aside>
 </slide>
 
 <slide class="nobackground">
@@ -832,14 +1017,14 @@ function gotRemoteStream(e) {
     </aside>
 </slide>
 
-<!-- <slide class="nobackground">
+<slide class="nobackground">
     <article class="fill flexbox vcenter">
-      <div><a href="http://apprtc.appspot.com" title="Canonical RTCPeerConnection videochat example">apprtc.appspot.com</a></div>
+      <div class='big'><a href="http://apprtc.appspot.com" title="Canonical RTCPeerConnection videochat example">apprtc.appspot.com</a></div>
     </article>
     <aside class="note">
     <p>This is the best place to start with a fully featured WebRTC app: RTCPeerConnection, with signaling provided by XHR and DataChannel.</p>
     </aside>
-</slide> -->
+</slide>
 
 <slide class="segue dark nobackground">
   <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
@@ -947,6 +1132,11 @@ document.querySelector("button#send").onclick = function (){
 </pre>
   </article>
     <aside class="note">
+
+    <p>SCTP is now available in Chrome 30 (flagged) and 31 (no flag).</p>
+  <p>- optional reliable transfer, e.g. for file sharing (though in fact this has been accomplished over RTP, the old protocol for RTCDataChannel, which in practice is actually pretty reliable)</p>
+  <p>- binary data</p>
+  <p>- built-in flow control (flow/congestion control is built into SCTP, and bandwidth is managed not capped).</p>
     </aside>
 </slide>
 
@@ -965,121 +1155,6 @@ document.querySelector("button#send").onclick = function (){
   <aside class="note">
   </aside>
 </slide>
-
-<slide class="segue dark nobackground">
-  <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
-  <hgroup class="auto-fadein">
-    <h2>Servers and Protocols</h2>
-    <h3>Peer to peer &mdash; but we need servers  :^\</h3>
-  </hgroup>
-  <aside class="note">
-      <p>So we just talked about how WebRTC can do all sorts of clever peer-to-peer stuff. But in order to bring up the peer-to-peer connection, we need servers to help coordinate things.
-      The first thing we need to do is something we call signaling.</p>
-  </aside>
-</slide>
-<!--
-<slide class="nobackground">
-    <article class="fill flexbox vcenter">
-      <div>Peer to peer &mdash; but we need servers  :^\</div>
-    </article>
-    <aside class="note">
-      <p>So discovery and signaling require intermediary servers to set up a call.</p>
-      <p>At this point in history there's no way to say 'Exchange streaming data with my friend's computer!'</p>
-    </aside>
-</slide>
--->
-<!-- <slide class="nobackground">
-  <hgroup>
-    <h2>Peer discovery</h2>
-  </hgroup>
-  <article>
-    <ul>
-      <li>Find peers (WebRTC clients)</li>
-      <li>Coordinate communication</li>
-    </ul>
-  </article>
-  <aside class="note">
-    <p>This is the process of making contact with someone in order to begin communicating with them.</p>
-    <p>If you use the telephone, you need a phone number -- and in terms of telephony, mechanisms to set up a call. </p>
-    <p>Likewise for using chat on your computer. WebRTC is similar.</p>
-    <p>A really simple example of a discovery mechanism is to share a URL. That's what's been done on several of the WebRTC demos. You can share the URL, then via a server establish some kind of communication channel.</p>
-    <p>Just to reiterate: WebRTC does not specify how to do this.</p>
-  </aside>
-</slide> -->
-
-<slide class="nobackground">
-  <hgroup>
-    <h2>Abstract Signaling</h2>
-  </hgroup>
-  <article>
-    <ul>
-      <li>Need to exchange 'session description' objects:</li>
-      <ul class="tight">
-      <li>What formats I support, what I want to send</li>
-      <li>Network information for peer-to-peer setup</li>
-      </ul>
-      <li>Can use any messaging mechanism</li>
-      <li>Can use any messaging protocol</li>
-    </ul>
-  </article>
-  <aside class="note">
-    <p>Signalling is the process of coordinating communication. Similar to, when you make a phone call, the phone system sends a message to the person you're calling indicating that there's an incoming call. Then, when you answer the call, a message is sent back indicating the call is live.</p>
-    <p>The same is true for WebRTC. A message needs to get sent by each side indicating the parameters they want to use for the call. This is called a "session description", and it includes a bunch of details regarding codecs, encryption, network information, etc.</p>
-    <p>The details aren't critical for most apps; they just need to exchange these messages in some way. The mechanism is up to the app - it can use WebSockets, Google Cloud Messaging, XHR, whatever it wants to use.</p>
-    <p>Similarly, the exact protocol through which these are exchanged is also up to the app - many apps will send these messages as JSON, although some apps may use the standard SIP or XMPP protocols.</p>
-  </aside>
-</slide>
-
-<slide>
-  <hgroup>
-    <h2>Signaling Diagram</h2>
-  </hgroup>
-  <article class="flexbox vcenter">
-    <img src="images/jsep.png" alt="JSEP architecture diagram">
-  </article>
-      <aside class="note">
-      <p>Here's a diagram that demonstrates this process. The caller sends a session description to its signaling server in the cloud, which then forwards this on to the callee. Similarly, the callee then sends its own session description back through the cloud to the caller. Once each side has given the session descriptions to RTCPeerConnection, the peer-to-peer link is established and media can flow.</p>
-    </aside>
-</slide>
-
-<slide>
-  <hgroup>
-    <h2>An RTCSessionDescription</h2>
-  </hgroup>
-  <article>
-<pre class="prettyprint" data-lang="ugh">
-v=0
-o=- 7614219274584779017 2 IN IP4 127.0.0.1
-s=-
-t=0 0
-a=group:BUNDLE audio video
-a=msid-semantic: WMS
-m=audio 1 RTP/SAVPF 111 103 104 0 8 107 106 105 13 126
-c=IN IP4 0.0.0.0
-a=rtcp:1 IN IP4 0.0.0.0
-a=ice-ufrag:W2TGCZw2NZHuwlnf
-a=ice-pwd:xdQEccP40E+P0L5qTyzDgfmW
-a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level
-a=mid:audio
-a=rtcp-mux
-a=crypto:1 AES_CM_128_HMAC_SHA1_80 inline:9c1AHz27dZ9xPI91YNfSlI67/EMkjHHIHORiClQe
-a=rtpmap:111 opus/48000/2
-...
-</pre>
-  </article>
-    <aside class="note">
-    <p>In case you're wondering, the insides of a RTCSessionDescription look like this. While apps can manipulate this information for fine-grained control, we've tried to make it so that most apps don't need to worry about this.</p>
-    </aside>
-</slide>
-
-<!-- <slide>
-  <hgroup>
-    <h2>Making the connection</h2>
-  </hgroup>
-  <article class="flexbox vcenter">
-<a href="http://www.w3.org/TR/webrtc/#simple-example" title="Simple W3C signaling example">w3.org/TR/webrtc/#simple-example</a>
-  </article>
-</slide> -->
 
 <slide class="segue dark nobackground">
   <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
@@ -1199,7 +1274,8 @@ a=rtpmap:111 opus/48000/2
      <ul>
         <li>stun.l.google.com:19302</li>
         <li>WebRTC stunserver, turnserver</li>
-        <li>rfc5766-turn-server</li>
+        <li><a href="http://code.google.com/p/rfc5766-turn-server" title="rfc5766-turn-server code and links to information">rfc5766-turn-server</a></li>
+        <li> <a href="https://groups.google.com/forum/#!msg/discuss-webrtc/X-OeIUC0efs/XW5Wf7Tt1vMJ" title="">VM image for Amazon Web Services</a></li>
         <li>restund</li>
     </ul>
   </article>
@@ -1232,6 +1308,9 @@ a=rtpmap:111 opus/48000/2
   </article>
 <aside class="note">
     <p>We've taken care to build security into WebRTC from the very beginning; all media and data is encrypted and protected, we require opt-in from the user before enabling their mic and camera, and WebRTC runs in the Chrome sandbox, which means that even if someone sends malicious data to WebRTC, the browser will be unaffected.</p>
+    <p>However, signaling mechanisms aren't defined by WebRTC standards, so it's up to you make signaling secure. If an attacker manages to hijack signaling, they can stop sessions, redirect connections and record, alter or inject content.</p>
+    <p>The most important factor in securing signaling is to use secure protocols, HTTPS and WSS, which ensure that messages cannot be intercepted unencrypted.  Also be careful not to broadcast signaling messages in a way that they can be accessed by other callers using the same signaling server.
+</p>
   </aside>
 </slide>
 
@@ -1360,50 +1439,7 @@ a=rtpmap:111 opus/48000/2
     </aside>
 </slide>
 
-<!-- <slide>
-  <hgroup>
-    <h2>Signalling: find me a candidate</h2>
-  </hgroup>
-  <article>
-    <ol>
-      <li>Caller creates RTCPeerConnection object.</li>
-      <li>If success, callback passed IceCandidate.</li>
-      <li>Caller sends IceCandidate to callee.</li>
-      <li>Callee creates a new remote IceCandidate, adds to remote description.</li>
-      <li>Ping!</li>
-    </ol>
-  </article>
-    <aside class="note">
-    <p>When the RTCPeerConnection object has been successfully created by the caller, the onIceCallback callback is called (in this example).</p>
-      <p>This callback is passed a candidate object, which the caller then serialises and sends to the callee.</p>
-      <p>On receipt of this message, the callee creates a new IceCandidate and calls processIceMessage() on it.</p>
-    </aside>
-</slide>
 
-<slide>
-  <hgroup>
-    <h2>Signalling: make me an offer</h2>
-  </hgroup>
-  <article>
-    <ol>
-      <li>Caller sends offer.</li>
-      <li>Callee receives offer.</li>
-      <li>Callee sends answer.</li>
-      <li>Caller receives answer.</li>
-      <li>Ping!</li>
-    </ol>
-  </article>
-    <aside class="note">
-      <ol>
-        <li>The caller creates an RTCPeerConnection object and sets the local description.</li>
-        <li>Caller uses RTCPeerConnection to create an offer. An offer is a blob -- a local session description in SDP format.</li>
-        <li>The offer is serialised and communicated via the signaling channel to the callee. </li>
-        <li>When the callee gets the offer message, they create an RTCPeerConnection object and set the remote description from the offer.</li>
-        <li>The callee then uses its RTCPeerConnection to creates an answer (passing it the offer) and sends that back to the caller.</li>
-      </ol>
-    </aside>
-</slide>
- -->
 
 <slide class="segue dark nobackground">
   <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
