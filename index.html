@@ -54,14 +54,6 @@ URL: https://code.google.com/p/io-2012-slides
   </article>
 </slide> -->
 
-<slide class="nobackground">
-    <article class="fill flexbox vcenter">
-      <div class='big'><a href="http://www.samdutton.net/realtime2013" title="These slides online">gowebrtc.appspot.com</a></div>
-    </article>
-    <aside class="note">
-    </aside>
-</slide>
-
 <slide class="segue dark quote nobackground">
   <aside class="gdbar right bottom"><img src="images/google_developers_icon_128.png"></aside>
   <article class="flexbox vleft auto-fadein">
@@ -77,6 +69,14 @@ URL: https://code.google.com/p/io-2012-slides
     <p>
    </p>
   </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div class='big'><a href="http://www.samdutton.net/realtime2013" title="These slides online">gowebrtc.appspot.com</a></div>
+    </article>
+    <aside class="note">
+    </aside>
 </slide>
 
 <slide class="nobackground">
@@ -154,8 +154,8 @@ URL: https://code.google.com/p/io-2012-slides
   </hgroup>
   <article>
     <ul>
-      <li>Protocols for communication: IETF</li>
-      <li>Standards for APIs: W3C</li>
+      <li>IETF communication protocols: <a href="http://tools.ietf.org/html/draft-ietf-rtcweb-overview" title="IETF: Overview: Real Time Protocols for Brower-based Applications">RTCWEB</a>, <a href="http://tools.ietf.org/html/draft-ietf-rtcweb-jsep-00" title="IETF draft proposal">JSEP</a>...</li>
+      <li>W3C API standards: <a href="http://www.w3.org/TR/webrtc/" title="W3C WebRTC draft spec">WebRTC</a>, <a href="http://www.w3.org/TR/mediacapture-streams/" title="W3C Media Capture and Streams draft spec">Media Capture and Streams</a>... </li>
       <li>Media and communication stack: libjingle, VP8, Opus...</li>
       <li>Design for a new communications ecosystem</li>
     </ul>
@@ -203,11 +203,11 @@ URL: https://code.google.com/p/io-2012-slides
 
 <slide class="nobackground">
   <article class="fill flexbox vcenter">
-       <div class="big"><b>1,000,000,000+</b></div>
-       <div>WebRTC Endpoints</div>
+       <div class="big" style="margin: 0 0 0.3em 0;"><b>1,000,000,000+</b></div>
+       <div>WebRTC endpoints</div>
   </article>
   <aside class="note">
-  <p>Over one billion WebRTC-enabled users, which gives some idea of the size of this opportunity. In order to grow the ecosystem further, we're also providing official, supported native versions of WebRTC for Android, and very soon iOS.</p>
+  <p>Over one billion WebRTC-enabled users, which gives some idea of the size of this opportunity. In order to grow the ecosystem further, we're also providing official, supported native versions of WebRTC for Android, and iOS.</p>
   </aside>
 </slide>
 
@@ -336,8 +336,8 @@ URL: https://code.google.com/p/io-2012-slides
   </hgroup>
   <article>
     <ul>
-      <li>Represents a stream of audio and/or video</li>
-      <li>Can contain multiple 'tracks'</li>
+      <li>Represents a stream of synchronised media</li>
+      <li>Can contain multiple audio and/or video MediaStreamTracks</li>
       <li>Obtain a MediaStream with <code>navigator.getUserMedia()</code></li>
     </ul>
   </article>
@@ -475,7 +475,15 @@ function errorCallback(error) {
 
 <slide class="nobackground">
     <article class="fill flexbox vcenter">
-      <div><a href="http://webcamtoy.com/app" title="getUserMedia photobooth, with effects">webcamtoy.com</a></div>
+      <div><a href="http://html5-demos.appspot.com/static/getusermedia/photobooth.html" title="getUserMedia photobooth with CSS effects">html5-demos.appspot.com/static/getusermedia/photobooth.html</a></div>
+    </article>
+    <aside class="note">
+    </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div><a href="http://webcamtoy.com/app" title="getUserMedia photobooth with WebGL effects and sharing">webcamtoy.com</a></div>
     </article>
     <aside class="note">
     </aside>
