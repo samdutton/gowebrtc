@@ -81,6 +81,14 @@ URL: https://code.google.com/p/io-2012-slides
 
 <slide class="nobackground">
     <article class="fill flexbox vcenter">
+      <div style='font-size: 2em'><a href="https://github.com/samdutton/gowebrtc" title="Github repository for these slides">github.com/samdutton/gowebrtc</a></div>
+    </article>
+    <aside class="note">
+    </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
       <div>Real-time communication built into the browser</div>
     </article>
     <aside class="note">
@@ -156,7 +164,7 @@ URL: https://code.google.com/p/io-2012-slides
     <ul>
       <li>IETF communication protocols: <a href="http://tools.ietf.org/html/draft-ietf-rtcweb-overview" title="IETF: Overview: Real Time Protocols for Brower-based Applications">RTCWEB</a>, <a href="http://tools.ietf.org/html/draft-ietf-rtcweb-jsep-00" title="IETF draft proposal">JSEP</a>...</li>
       <li>W3C API standards: <a href="http://www.w3.org/TR/webrtc/" title="W3C WebRTC draft spec">WebRTC</a>, <a href="http://www.w3.org/TR/mediacapture-streams/" title="W3C Media Capture and Streams draft spec">Media Capture and Streams</a>... </li>
-      <li>Media and communication stack: libjingle, VP8, Opus...</li>
+      <li>Media and communication stack: <a href="http://www.webrtc.org/reference/webrtc-internals" title="webrtc.org WebRTC Internals: libjingle components reused by WebRTC">libjingle</a>, <a href="http://www.webmproject.org/tools/" title="WebM and VP8 tools">VP8</a>, <a href="http://www.opus-codec.org/" title="Opus Codec home page">Opus</a>...</li>
       <li>Design for a new communications ecosystem</li>
     </ul>
   </article>
@@ -237,16 +245,6 @@ URL: https://code.google.com/p/io-2012-slides
 </slide>
 
 <slide class="nobackground">
-  <article class="fill flexbox vcenter">
-    <div><a href="blog.vline.com/post/61581986806/live-tv-interview-powered-by-vline-customer-in-quality" title="vLine blog post" style="border-bottom: none;"><img src="images/skyKit.jpg" alt="Webcam and Yeti mic used for Sky interview" style="width: 100%;" /></a></div>
-  </article>
-  <aside class="note">
-  <p>And the kit to do that?</p>
-  <p>A hundred Euro Yeti mic and I webcam like the one I've got here</p>
-  </aside>
-</slide>
-
-<slide class="nobackground">
     <article class="fill flexbox vcenter">
       <div class='big'><img src="images/obTrucks.jpg" alt="Outdoor broadcast truck" style='width: 100%' /></div>
       <footer class="source" style='position: absolute; bottom: 23px; left: 150px'><a href="https://en.wikipedia.org/wiki/File:BBC_HD_SNG.jpg" title="OB trucks">en.wikipedia.org/wiki/File:BBC_HD_SNG.jpg</a></footer>
@@ -254,6 +252,16 @@ URL: https://code.google.com/p/io-2012-slides
     <aside class="note">
       <p>You don't need one of these!</p>
     </aside>
+</slide>
+
+<slide class="nobackground">
+  <article class="fill flexbox vcenter">
+    <div><a href="blog.vline.com/post/61581986806/live-tv-interview-powered-by-vline-customer-in-quality" title="vLine blog post" style="border-bottom: none;"><img src="images/skyKit.jpg" alt="Webcam and Yeti mic used for Sky interview" style="width: 100%;" /></a></div>
+  </article>
+  <aside class="note">
+  <p>And the kit to do that?</p>
+  <p>A hundred Euro Yeti mic and I webcam like the one I've got here</p>
+  </aside>
 </slide>
 
 
@@ -404,7 +412,7 @@ function errorCallback(error) {
    <p>If you run with HTTPS, or from an app, permission will only be asked for once.</p>
     <p>Likewise with Chrome apps that ask for "audioCapture" and"videoCapture" permissions. Permission is only requested on installation. gUM isn't available for Chrome extensions at this point, though I believe some have been whitelisted.</p>
     <p>Chrome flag: <code>--use-fake-ui-for-media-stream</code></p>
-    <p>UI settings can be changed afterwards.</p>
+    <p>To change cameras/settings in Chrome click to the right of the URL bar</p>
   </aside>
 </slide>
 
@@ -861,8 +869,6 @@ function gotAudio(stream) {
   </aside>
 </slide>
 
-
-
 <slide>
   <hgroup>
     <h2>Signaling: how?</h2>
@@ -900,6 +906,21 @@ function gotAudio(stream) {
   </ul>
   <p><a href="https://bitbucket.org/webrtc/codelab/src/master/complete/step5" title="Codelab walkthrough to build signaling server with Socket.io">Codelab</a></p>
   <p><a href="http://samdutton-nodertc.jit.su" title="Video chat application using Socket.io for signaling">Live example</a></p>
+  </article>
+    <aside class="note">
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Signaling gotchas</h2>
+  </hgroup>
+  <article>
+  <ul>
+    <li>RTCPeerConnection won't start gathering candidates until <code>setLocalDescription()</code> is called: mandated in <a href="http://tools.ietf.org/html/draft-ietf-rtcweb-jsep-03#section-4.2.4" title="JSEP IETF draft, section 4.2.4">JSEP IETF draft</a></li>
+    <li>Take advantage of <a href="http://tools.ietf.org/html/draft-rescorla-mmusic-ice-trickle-00" title="IETF Trickle ICE Memo">Trickle ICE</a>: call addIceCandidate() as soon as candidates&nbsp;arrive</li>
+    <li>Not bandwidth or CPU hungry, but could still be heavy load</li>
+  </ul>
   </article>
     <aside class="note">
     </aside>
@@ -1051,6 +1072,16 @@ a=ice-pwd:xdQEccP40E+P0L5qTyzDgfmW
 
 <slide class="nobackground">
     <article class="fill flexbox vcenter">
+      <div><a href="http://simpl.info/rtcpeerconnection/multi
+" title="RTCPeerConnection as input to RTCPeerConnection">simpl.info/rtcpeerconnection/multi</a></div>
+    </article>
+    <aside class="note">
+    <p>Hot off the press...</p>
+    </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
       <div class="big"><a href="http://www.simpl.info/pc" title="Simple one-page RTCPeerConnection example">simpl.info/pc</a></div>
     </article>
     <aside class="note">
@@ -1069,19 +1100,6 @@ a=ice-pwd:xdQEccP40E+P0L5qTyzDgfmW
     <p>This is the best place to start with a fully featured WebRTC app: RTCPeerConnection, with signaling provided by XHR and DataChannel.</p>
     </aside>
 </slide>
-
-<slide class="nobackground">
-    <article class="fill flexbox vcenter">
-      <div><a href="http://simpl.info/rtcpeerconnection/multi
-" title="RTCPeerConnection as input to RTCPeerConnection">simpl.info/rtcpeerconnection/multi</a></div>
-    </article>
-    <aside class="note">
-    <p>Hot off the press...</p>
-    </aside>
-</slide>
-
-
-
 
 <slide class="segue dark nobackground">
   <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
@@ -1220,7 +1238,8 @@ document.querySelector("button#send").onclick = function (){
     <h3>P2P in the age of firewalls and NATs</h3>
   </hgroup>
   <aside class="note">
-      <p>The other place where servers come into play is in figuring out how to route the peer-to-peer connection.</p>
+    <p>The other place where servers come into play is in figuring out how to route the peer-to-peer connection.</p>
+    <p>WebRTC endpoints use signaling to exchange network information to establish a connection.</p>
   </aside>
 </slide>
 
@@ -1366,8 +1385,6 @@ document.querySelector("button#send").onclick = function (){
 <aside class="note">
     <p>We've taken care to build security into WebRTC from the very beginning; all media and data is encrypted and protected, we require opt-in from the user before enabling their mic and camera, and WebRTC runs in the Chrome sandbox, which means that even if someone sends malicious data to WebRTC, the browser will be unaffected.</p>
     <p>However, signaling mechanisms aren't defined by WebRTC standards, so it's up to you make signaling secure. If an attacker manages to hijack signaling, they can stop sessions, redirect connections and record, alter or inject content.</p>
-    <p>The most important factor in securing signaling is to use secure protocols, HTTPS and WSS, which ensure that messages cannot be intercepted unencrypted.  Also be careful not to broadcast signaling messages in a way that they can be accessed by other callers using the same signaling server.
-</p>
   </aside>
 </slide>
 
@@ -1379,7 +1396,9 @@ document.querySelector("button#send").onclick = function (){
     <img src="images/securePathways.png" alt="Secure pathways between peers" style="position: relative; top: -10px">
   </article>
   <aside class="note">
-    <p>The only thing an app developer needs to do to ensure WebRTC security, is to use HTTPS when sending signaling data. In this diagram, the signaling pathways are protected using HTTPS, and the media and data are protected using the standard SRTP and DTLS mechanisms.</p>
+    <p>The most important factor in securing signaling is to use secure protocols, HTTPS and WSS, which ensure that messages cannot be intercepted unencrypted.</p>
+    <p>Also be careful not to broadcast signaling messages in a way that they can be accessed by other callers using the same signaling server.</p>
+    <p>In this diagram, the signaling pathways are protected using HTTPS, and the media and data are protected using the standard SRTP and DTLS mechanisms.</p>
   </aside>
 </slide>
 
@@ -1638,23 +1657,22 @@ conn.on('open', function(){
 
 <slide>
   <hgroup>
-    <h2>Services</h2>
+    <h2>Complete services</h2>
   </hgroup>
   <article>
-  <ul><li>Complete video services:</li>
+  <ul>
   <ul>
     <li><a href="http://www.tokbox.com/" title="Tokbox site">OpenTok</a> (acquired by Telefonica Digital)</li>
     <li><a href="http://www.vline.com/" title="vLine">vLine</a></li>
   </ul>
-    </ul>
-        <img src="images/networkmap.png" alt="Data center locations" style="" />
+  <img src="images/networkmap.png" alt="Data center locations" style="" />
   </article>
     <aside class="note">
       <p>Javascript frameworks make writing apps easier, but they don't handle some of the more complicated aspects, like signaling and TURN servers. Fortunately, there are a couple turnkey WebRTC services out there that take care of all of this for you. You can sign up for these services, get an API key, and then make calls using their deployed infrastructure; they also offer UI components that can easily be integrated into your application.</p>
     </aside>
 </slide>
 
-<!-- <slide>
+<slide>
   <hgroup>
     <h2>Don't forget the C++!</h2>
   </hgroup>
@@ -1663,9 +1681,8 @@ conn.on('open', function(){
   </article>
     <aside class="note">
       <p>The WebRTC C++ APIs mean you can build a WebRTC client on a server -- check out the example in the webrtc.org source repository.</p>
-      <p>Also a Qt/C++ demo on YouTube.</p>
     </aside>
-</slide> -->
+</slide>
 
 
 <slide>
@@ -1732,7 +1749,7 @@ conn.on('open', function(){
 
 <slide class="nobackground">
     <article class="fill flexbox vcenter">
-      <div class="big"><a href="http://io13webrtc.appspot.com" title="These slides online">io13webrtc.appspot.com</a></div>
+      <div class="big"><a href="http://gowebrtc.appspot.com" title="These slides online">gowebrtc.appspot.com</a></div>
     </article>
     <aside class="note">
     Once again, the link to the slides.
@@ -1765,7 +1782,7 @@ conn.on('open', function(){
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-41621713-1', 'io13webrtc.appspot.com');
+  ga('create', 'UA-44413410-1', 'gowebrtc.appspot.com');
   ga('send', 'pageview');
 
 </script>
