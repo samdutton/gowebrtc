@@ -940,26 +940,6 @@ function gotAudio(stream) {
 
 <slide>
   <hgroup>
-    <h2>Find me a candidate</h2>
-  </hgroup>
-  <article>
-    <ol>
-      <li>Fred and Wilma create RTCPeerConnection objects</li>
-      <li>If success, <code>icecandidate</code> events start propagating</li>
-      <li>Fred starts serialises IceCandidates and sends them to Wilma</li>
-      <li>Wilma gets Fred's IceCandidates, calls <code>addIceCandidate()</code></li>
-      <li>Wilma serialises IceCandidates and sends them to Fred</li>
-      <li>Fred gets Wilma's IceCandidates, calls <code>addIceCandidate()</code></li>
-    </ol>
-  </article>
-    <aside class="note">
-    <p>Once Fred and Wilma have a signaling channel, they can start sending network and media metadata, to make a direct connection and to start streaming audio and video.</p>
-    <p>This is the process of exchanging network data.</p>
-    </aside>
-</slide>
-
-<slide>
-  <hgroup>
     <h2>Make me an offer</h2>
   </hgroup>
   <article>
@@ -971,7 +951,6 @@ function gotAudio(stream) {
       <li>Wilma calls <code>createAnswer()</code></li>
       <li>Wilma calls <code>setLocalDescription()</code> with the answer and sends it to Fred</li>
       <li>Fred receives answer and calls <code>setRemoteDescription()</code></li>
-      <li>Ping!</li>
     </ol>
   </article>
     <aside class="note">
@@ -980,6 +959,27 @@ function gotAudio(stream) {
         <li>Caller uses RTCPeerConnection to create an offer. An offer is a blob -- a local session description in SDP format.</li>
         <li>The offer or answer can be edited, for example to tweak codecs.</li>
       </ol>
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Find me a candidate</h2>
+  </hgroup>
+  <article>
+    <ol>
+      <li>Fred and Wilma create RTCPeerConnection objects</li>
+      <li>If success, <code>icecandidate</code> events start propagating</li>
+      <li>Fred starts serialises IceCandidates and sends them to Wilma</li>
+      <li>Wilma gets Fred's IceCandidates, calls <code>addIceCandidate()</code></li>
+      <li>Wilma serialises IceCandidates and sends them to Fred</li>
+      <li>Fred gets Wilma's IceCandidates, calls <code>addIceCandidate()</code></li>
+      <li>Ping!</li>
+    </ol>
+  </article>
+    <aside class="note">
+    <p>Once Fred and Wilma have a signaling channel, they can start sending network and media metadata, to make a direct connection and to start streaming audio and video.</p>
+    <p>This is the process of exchanging network data.</p>
     </aside>
 </slide>
 
@@ -1174,7 +1174,8 @@ send(myData);
     <ul>
       <li>Same API as WebSockets</li>
       <li>Ultra-low latency</li>
-      <li>Unreliable or reliable</li>
+      <li>Optionally unreliable or reliable: <br />
+      &mdash; Firefox and Chrome 31, Chrome 30 behind a flag</li>
       <li>Secure</li>
     </ul>
   </article>
@@ -1308,7 +1309,7 @@ document.querySelector("button#send").onclick = function (){
     </ul>
   </article>
       <aside class="note">
-      <p>The other technique that WebRTC can use is called TURN. A TURN server is essentially a server that relays the data an endpoint is trying to send to the other side. Because it has a public address already, it's easy to contact, so the connection always works, even in cases where the endpoint is behind a restrictive firewall or proxy. The downside is that all the data traffic has to go through the relay, so there's a nontrivial bandiwdth cost.</p>
+      <p>The other technique that WebRTC can use is called TURN. A TURN server is essentially a server that relays the data an endpoint is trying to send to the other side. Because it has a public address already, it's easy to contact, so the connection always works, even in cases where the endpoint is behind a restrictive firewall or proxy. The downside is that all the data traffic has to go through the relay, so there's a nontrivial bandwidth cost.</p>
     </aside>
 </slide>
 
@@ -1321,6 +1322,35 @@ document.querySelector("button#send").onclick = function (){
   </article>
    <aside class="note">
       <p>Here's a diagram of that in action. We tried to use STUN, but it didn't quite work right. So instead, each side contacted its own TURN server, and then data flow goes from each endpoint, through the TURN server, to the other side.</p>
+    </aside>
+</slide>
+
+<slide>
+  <hgroup>
+    <h2>Selecting STUN and TURN servers</h2>
+  </hgroup>
+  <article>
+<pre class="prettyprint" data-lang="javascript">
+{
+  "iceServers": [
+    {
+      "url": "stun:stun.l.google.com:19302"
+    },
+    {
+      "url": "turn:192.158.29.39:3478?transport=udp",
+      "credential": "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+      "username": "28224511:1379330808"
+    },
+    {
+      "url": "turn:192.158.29.39:3478?transport=tcp",
+      "credential": "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+      "username": "28224511:1379330808"
+    }
+  ]
+}</pre>
+  </article>
+      <aside class="note">
+      <p>The other technique that WebRTC can use is called TURN. A TURN server is essentially a server that relays the data an endpoint is trying to send to the
     </aside>
 </slide>
 
@@ -1677,7 +1707,7 @@ conn.on('open', function(){
     <h2>Don't forget the C++!</h2>
   </hgroup>
   <article class="flexbox vcenter">
-    <a href="http://www.webrtc.org/reference/webrtc-internals" title="WebRTC API documentation">webrtc.org/reference/webrtc-internals</a>
+    <a href="http://www.webrtc.org/webrtc-native-code-package" title="WebRTC API documentation">webrtc.org/webrtc-native-code-package</a>
   </article>
     <aside class="note">
       <p>The WebRTC C++ APIs mean you can build a WebRTC client on a server -- check out the example in the webrtc.org source repository.</p>
@@ -1739,12 +1769,17 @@ conn.on('open', function(){
     </div>
   </article>
   <aside class="note">
-    <section>
-      <ul>
-        <li>So now it's your turn. We've built this technology into the web so that any developer can take advantage of real-time communications, and we can't wait to see what you do with it.</li>
-      </ul>
-    </section>
+    <p>So now it's your turn. We've built this technology into the web so that any developer can take advantage of real-time communications, and we can't wait to see what you do with it.</p>
   </aside>
+</slide>
+
+<slide class="nobackground">
+    <article class="fill flexbox vcenter">
+      <div class="big"><a href="http://talky.io/gowebrtc" title="Video chat app">talky.io/gowebrtc</a></div>
+    </article>
+    <aside class="note">
+    Once again, the link to the slides.
+    </aside>
 </slide>
 
 <slide class="nobackground">
